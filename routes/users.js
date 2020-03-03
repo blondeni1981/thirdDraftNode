@@ -14,10 +14,10 @@ let TaskObject = function (pTask, pDate, pPriority, pDescription, pLocation) {
 }
 
 // for testing purposes, its nice to preload some data
-taskArray.push(new TaskObject("Clean", 04/01/2020, "****", "Bathroom, Kitchen ", "House"));
+serverTaskArray.push(new TaskObject("Clean", 04/01/2020, "****", "Bathroom, Kitchen ", "House"));
 
-/* POST to addMovie */
-router.post('/addMovie', function(req, res) {
+/* POST to addTask */
+router.post('/addTask', function(req, res) {
   console.log(req.body);
   serverTaskArray.push(req.body);
   console.log(serverTaskArray);
@@ -26,8 +26,8 @@ router.post('/addMovie', function(req, res) {
 });
 
 
-/* GET movieList. */
-router.get('/movieList', function(req, res) {
+/* GET taskList. */
+router.get('/taskList', function(req, res) {
   res.json(serverTaskArray);
  });
 

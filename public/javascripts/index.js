@@ -96,8 +96,84 @@ function createList()
     });
    
 };
-  
+function compareTask(a, b) {
+  // Use toUpperCase() to ignore character casing
+  const taskA = a.Task.toUpperCase();
+  const taskB = b.Task.toUpperCase();
 
+  let comparison = 0;
+  if (taskA > taskB) {
+    comparison = 1;
+  } else if (taskA < taskB) {
+    comparison = -1;
+  }
+  return comparison;
+}
+  
+function comparePriority(a, b) {
+  // Use toUpperCase() to ignore character casing
+  const priorityA = a.Priority.toUpperCase();
+  const priorityB = b.Priority.toUpperCase();
+
+  let comparison = 0;
+  if (priorityA > priorityB) {
+    comparison = 1;
+  } else if (priorityA < priorityB) {
+    comparison = -1;
+  }
+  return comparison;
+}
+
+
+
+
+
+// code to exchange data with node server
+
+function FillArrayFromServer(){
+  // using fetch call to communicate with node server to get all data
+  fetch('/users/taskList')
+  .then(function (response) {  // wait for reply
+      return response.json();
+  })
+  .then(function (serverData) {     // now wait for data to be complete
+  // use our server data    
+  taskArray.length = 0;  // clear array
+  taskArray = serverData;
+  createList();  // placing this here will make it wait for data from server
+  })
+  .catch(function (err) {
+   console.log(err);
+  });
+};
+
+
+// using fetch to push an object up to server
+function addNewMoive(newMovie){
+ 
+  // post body data is our movie object
+  
+  // create request object
+  const request = new Request('/users/taskList', {
+      method: 'POST',
+      body: JSON.stringify(newMovie),
+      headers: new Headers({
+          'Content-Type': 'application/json'
+      })
+  });
+  
+  // pass that request object we just created into the fetch()
+  fetch(request)
+      // wait for initial server response of "200" success
+      .then(resPromise1 => resPromise1.json())    // the .json sets up 2nd promise
+      // wait for the .json promise, which is when the data is back
+      .then(resPromise2 => document.location.href = "#ListAll" )
+      .catch(function (err) {
+          console.log(err);
+      });
+  
+}; // end of addNewUser
+  
 /**
  *  https://ourcodeworld.com/articles/read/764/how-to-sort-alphabetically-an-array-of-objects-by-key-in-javascript
 * Function to sort alphabetically an array of objects by some specific key.
