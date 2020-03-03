@@ -1,0 +1,37 @@
+h2 {
+  text-align: center;
+  color: black;
+  background-color:tan;
+
+  
+}
+
+
+
+p {
+  font-size: medium;
+  font-weight: bold;
+}
+
+#home{
+  font-size: medium;
+}
+
+#load{
+  font-size: medium;
+}
+
+#listAll {
+  font-size: medium;
+}
+
+#priority{
+  font-size: medium;
+}
+
+#footer1{
+  font-size: medium;
+  text-align: center;
+  
+  
+}
