@@ -8,7 +8,7 @@ let serverTaskArray = []; // our "permanent storage" on the web server
 let TaskObject = function (pTask, pDate, pPriority, pDescription, pLocation) {
   this.Task = pTask;
   this.Date = pDate;
-  this.Priority = pPriority;  // action  comedy  drama  horrow scifi  musical  western
+  this.Priority = pPriority;  
   this.Description = pDescription;
   this.Location = pLocation;
 }
@@ -32,7 +32,7 @@ router.get('/taskList', function(req, res) {
  });
 
  /* DELETE to deleteMovie. */
- router.delete('/deleteMovie/:ID', function(req, res) {//id == title. une that for a variable
+ router.delete('/deleteTask/:ID', function(req, res) {//id == title. une that for a variable
   let id = req.params.ID;
   id = id.toLowerCase();  // allow user to be careless about capitalization
   console.log('deleting ID: ' + id);

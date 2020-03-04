@@ -5,7 +5,6 @@ let selectedPriority = "not selected";
 var TaskObject = function (pTask, pDate, pPriority, pDescription, pLocation) {
   this.Task = pTask;
   this.Date = pDate;
-  this.ID = taskArray.length + 1;
   this.Priority = pPriority;  // action  comedy  drama  horrow scifi  musical  western
   this.Description = pDescription;
   this.Location = pLocation;
@@ -16,31 +15,57 @@ taskArray.push(new TaskObject("Clean", 04/01/2020, "****", "Bathroom, Kitchen ",
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  document.getElementById("buttonAdd").addEventListener("click", function () {
-    taskArray.push(new TaskObject(document.getElementById("task").value, document.getElementById("date").value,
-      selectedPriority, document.getElementById("description").value, document.getElementById("location").value));
-});
+  let newMovie = new TaskObject(document.getElementById("task").value, document.getElementById("date").value,
+       selectedPriority, document.getElementById("description").value,
+       document.getElementById("location").value);
+       addNewTask(newtask); // now post new movie object to node server
+  
+  
 
   $(document).bind("change", "#select-task", function (event, ui) {
     selectedPriority = $('#select-task').val();
   });
 
   document.getElementById("buttonSortTask").addEventListener("click", function () {
-    taskArray.sort(dynamicSort("Task"));
+    taskArray = taskArray.sort(compareTask);
     createList();
-    document.location.href = "index.html#ListAll";
+  
   });
-
   document.getElementById("buttonSortPriority").addEventListener("click", function () {
-    taskArray.sort(dynamicSort("Priority"));
+    TaskArray = TaskArray.sort(comparePriority);
     createList();
-    document.location.href = "index.html#ListAll";
+
+  });
+  ////////may change
+  // delete button  Had trouble with spaces in titles, its an easy thing to fix
+  // I just didn't get the time
+  document.getElementById("buttonClear").addEventListener("click", function () {
+    let deleteTask = document.getElementById("deleteTask").value;
+    // doing the call to the server right here
+    fetch('users/deleteTask/' + deleteTask , {
+    // users/deleteMovie/Moonstruck   for example, this is what the URL looks like sent over the network
+        method: 'DELETE'
+    })  
+    // now wait for 1st promise, saying server was happy with request or not
+    .then(responsePromise1 => responsePromise1.text()) // ask for 2nd promise when server is node
+    .then(responsePromise2 =>  console.log(responsePromise2), document.location.href = "index.html#refreshPage")  // wait for data from server to be valid
+    // force jump off of same page to refresh the data after delete
+    .catch(function (err) {
+        console.log(err);
+        alert(err);
+       });
+
+   
   });
 
 $(document).on("pagebeforeshow", "#ListAll", function (event) {   // have to use jQuery 
- // document.getElementById("IDparmHere").innerHTML = "";
-  createList();
+  FillArrayFromServer(); 
 });
+
+$(document).on("pagebeforeshow", "#refreshPage", function (event) {   
+  document.location.href = "index.html#ListAll";
+});
+
   
   document.getElementById("buttonClear").addEventListener("click", function () {
     document.getElementById("task").value = "";
@@ -55,14 +80,24 @@ $(document).on("pagebeforeshow", "#Load", function (event) {   // have to use jQ
   document.getElementById("description").value = "";
   document.getElementById("location").value = "";
   });
-
-$(document).on("pagebeforeshow", "#page3", function (event) {   // have to use jQuery 
-  let localID =  document.getElementById("IDparmHere").innerHTML;
-  document.getElementById("oneTask").innerHTML = "Your Task:   " + taskArray[localID-1].Task;
-  document.getElementById("oneDate").innerHTML = "Date:  " + taskArray[localID - 1].Date;
-  document.getElementById("onePriority").innerHTML = "Priority:   " + taskArray[localID - 1].Priority;
-  document.getElementById("oneDescription").innerHTML = "Description: " + taskArray[localID - 1].Description;
-  document.getElementById("oneLocation").innerHTML = "Location:   " + taskArray[localID - 1].Location;
+  $(document).on("pagebeforeshow", "#detailPage", function (event) {   // have to use jQuery 
+    let localTask = document.getElementById("IDparmHere").innerHTML;
+    for(let i=0; i < taskArray.length; i++) {   
+        if(taskArray[i].Task = localTask){
+            document.getElementById("oneTask").innerHTML =  movieArray[i].Task;
+            document.getElementById("oneDate").innerHTML =  movieArray[i].Date;
+            document.getElementById("onePriority").innerHTML =  movieArray[i].Priority;
+            document.getElementById("oneDescription").innerHTML =   movieArray[i].Description;
+            document.getElementById("oneLocation").innerHTML =   movieArray[i].Location;
+        }  
+    }
+//$(document).on("pagebeforeshow", "#page3", function (event) {   // have to use jQuery 
+  //let localID =  document.getElementById("IDparmHere").innerHTML;
+  //document.getElementById("oneTask").innerHTML = "Your Task:   " + taskArray[localID-1].Task;
+  //document.getElementById("oneDate").innerHTML = "Date:  " + taskArray[localID - 1].Date;
+  //document.getElementById("onePriority").innerHTML = "Priority:   " + taskArray[localID - 1].Priority;
+  //document.getElementById("oneDescription").innerHTML = "Description: " + taskArray[localID - 1].Description;
+  //document.getElementById("oneLocation").innerHTML = "Location:   " + taskArray[localID - 1].Location;
  });
 
 });
@@ -149,14 +184,14 @@ function FillArrayFromServer(){
 
 
 // using fetch to push an object up to server
-function addNewMoive(newMovie){
+function addNewTask(newTask){
  
   // post body data is our movie object
   
   // create request object
   const request = new Request('/users/taskList', {
       method: 'POST',
-      body: JSON.stringify(newMovie),
+      body: JSON.stringify(newTask),
       headers: new Headers({
           'Content-Type': 'application/json'
       })
