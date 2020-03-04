@@ -14,7 +14,7 @@ let TaskObject = function (pTask, pDate, pPriority, pDescription, pLocation) {
 }
 
 // for testing purposes, its nice to preload some data
-serverTaskArray.push(new TaskObject("Clean", 04/01/2020, "****", "Bathroom, Kitchen ", "House"));
+//serverTaskArray.push(new TaskObject("Clean", 04/01/2020, "****", "Bathroom, Kitchen ", "House"));
 
 /* POST to addTask */
 router.post('/addTask', function(req, res) {
@@ -30,19 +30,6 @@ router.post('/addTask', function(req, res) {
 router.get('/taskList', function(req, res) {
   res.json(serverTaskArray);
  });
-
- /* DELETE to deleteMovie. */
- router.delete('/deleteTask/:ID', function(req, res) {//id == title. une that for a variable
-  let id = req.params.ID;
-  id = id.toLowerCase();  // allow user to be careless about capitalization
-  console.log('deleting ID: ' + id);
-   for(let i=0; i < serverTaskArray.length; i++) {
-     if(id == (serverTaskArray[i].Title).toLowerCase()) {
-     serverTaskArray.splice(i,1);
-     }
-   }
-   res.status(200).send(JSON.stringify('success'));
-});
 
 
 //  router.???('/userlist', function(req, res) {

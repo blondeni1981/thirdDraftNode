@@ -3,14 +3,14 @@
 <html lang="en">
 <head>o
     <meta charset="UTF-8">
-    <title>Track List and Tasks</title>
+    <title>Track Your Tasks</title>
     <!-- <documentation at http://demos.jquerymobile.com/1.4.1/ > -->
   
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-    <script src="index.js"></script>
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="/public/javascripts/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/style.css">
 
 </head>
 
@@ -112,12 +112,13 @@
             <div data-role="content" data-theme='e' style="background-color: lightgray;">
               <h2> Tasks</h2>
               <div id="divTask" ></div>
-            </div>
+            
             <input type="button" value="Sort By Task" id="buttonSortTask" data-inline="true" data-corners="true" data-role="none" />
             <input type="button" value="Sort By Priority" id="buttonSortPriority" data-inline="true" data-role="none"   />
-          
-
-              
+            <br/>
+            <br/>
+           
+        </div>
             <!--   page footer -->
             <div data-role="footer" data-theme='b'>
             <p id="footer1">Copyright 2020 Nicole Inman</p>
@@ -140,14 +141,18 @@
                 </div><!-- /navbar -->
           </div>
             <!--  content -->
-            <div data-role="content" data-theme='c' style="background-color: lightgray;">
-                <h3>Task Details</h3>
-                <p id="IDparmHere" hidden></p>  <!-- hidden    a place to stash the user ID -->
-               <p id="oneTask"></p>
-               <p id="oneDate"></p>
-                <p id="onePriority"></p>
-                <p id="oneDescription"></p>
-                <p id="oneLocation"></p>
+            <div data-role="content" data-theme='d' style="background-color: lightgray;">
+              <div>
+                  <h3>Task Details</h3>
+                  <p id="IDparmHere" hidden>change1</p>  <!-- hidden    a place to stash the movie title -->
+                  <p class="bold" > Task Details</p>
+                  <p> <span class="bold"> Task: </span> <span id="oneTask" </span>  </p>
+                  <p><span class="bold"> Date: </span> <span id="oneDate" </span>  </p>
+                  <p><span class="bold"> Priority: </span> <span id="onePriority" </span>  </p>
+                  <p><span class="bold"> Description: </span> <span id="oneDescription" </span>  </p>
+                  <p><span class="bold"> Location: </span> <span id="oneLocation" </span>  </p>
+  
+             
                 
               
             </div>
@@ -158,10 +163,7 @@
             </div>
         </div>
         
-        <div data-role="page"  id="refreshPage">
-          <!--  content -->
-        <div data-role="content" >
-    </div>
+  
 
     
 
