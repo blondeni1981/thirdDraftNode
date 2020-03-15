@@ -122,7 +122,7 @@ function createList()
     li.innerHTML = "<a data-transition='pop' class='oneTask' data-parm=" + element.Task + "  href='#page3'>Get Details </a> " + element.Task + ":  " + element.Task + "  " + element.Priorit;
     ul.appendChild(li);
   });
-  divTask.appendChild(ul)
+  //divTask.appendChild(ul)
 
     //set up an event for each new li item, if user clicks any, it writes >>that<< items data-parm into the hidden html 
     var classname = document.getElementsByClassName("oneTask");
@@ -213,4 +213,3 @@ function addNewTask(newTask){
       });
   
 }; // end of addNewUser
-  
